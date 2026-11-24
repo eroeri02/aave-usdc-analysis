@@ -21,6 +21,12 @@ The RPC endpoint is read from the `RPC_URL` environment variable and defaults to
 $env:RPC_URL = "https://your-node.example"
 ```
 
+## Usage
+
+```powershell
+python src/m1_snapshot.py   # USDC reserve snapshot: reference block vs. latest block
+```
+
 ## Project layout
 
 ```
@@ -32,7 +38,7 @@ charts/   generated figures (PNG)
 ## Status
 
 - [x] M0 — Setup
-- [ ] M1 — First on-chain call (`getReserveData`)
+- [x] M1 — First on-chain call (`getReserveData`)
 - [ ] M2 — Daily historical data
 - [ ] M3 — Interest rate strategy parameters over time
 - [ ] M4 — Analysis and charts
