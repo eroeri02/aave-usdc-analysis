@@ -24,8 +24,21 @@ $env:RPC_URL = "https://your-node.example"
 ## Usage
 
 ```powershell
-python src/m1_snapshot.py   # USDC reserve snapshot: reference block vs. latest block
+python src/m1_snapshot.py        # USDC reserve snapshot: reference block vs. latest block
+python src/m2_fetch_history.py   # daily snapshots -> data/usdc_daily.csv (safe to re-run)
 ```
+
+## Data notes
+
+- **Sampling:** one snapshot at every block number that is a multiple of 7,200 (≈ one per day).
+  A real day has ~7,167 blocks because some 12-second slots stay empty, so the sample time drifts
+  a few minutes per day and 4 calendar days are missing between 2024-11-21 and 2026-11-25.
+  The fixed grid makes the fetch resumable: re-runs skip blocks that are already saved.
+- **Units:** amounts are in USDC and treated as ≈ USD. Rates are annual APRs.
+- **Utilization** = variable debt / aToken supply. Stable debt was 0 during the whole window.
+  aToken supply excludes the treasury's not-yet-minted share, so on fully drained days this ratio
+  reads slightly above 100% (max 100.013%) and supply − debt is slightly negative. On those days
+  the pool's actual cash (`getVirtualUnderlyingBalance`) was between ~$0 and ~$60k.
 
 ## Project layout
 
@@ -39,7 +52,7 @@ charts/   generated figures (PNG)
 
 - [x] M0 — Setup
 - [x] M1 — First on-chain call (`getReserveData`)
-- [ ] M2 — Daily historical data
+- [x] M2 — Daily historical data
 - [ ] M3 — Interest rate strategy parameters over time
 - [ ] M4 — Analysis and charts
 - [ ] M5 — Findings and limitations
