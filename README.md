@@ -27,6 +27,7 @@ $env:RPC_URL = "https://your-node.example"
 python src/m1_snapshot.py        # USDC reserve snapshot: reference block vs. latest block
 python src/m2_fetch_history.py   # daily snapshots -> data/usdc_daily.csv (safe to re-run)
 python src/m3_rate_params.py     # rate model parameters per day + periods + model check
+python src/m4_analysis.py        # summary numbers + charts/*.png (fetches pool cash on stress days once)
 ```
 
 ## Data notes
@@ -55,5 +56,5 @@ charts/   generated figures (PNG)
 - [x] M1 — First on-chain call (`getReserveData`)
 - [x] M2 — Daily historical data
 - [x] M3 — Interest rate strategy parameters over time
-- [ ] M4 — Analysis and charts
+- [x] M4 — Analysis and charts
 - [ ] M5 — Findings and limitations

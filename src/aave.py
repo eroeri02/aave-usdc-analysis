@@ -69,6 +69,13 @@ def utilization(total_debt: float, total_supply: float) -> float:
     return utilization_ratio
 
 
+def get_virtual_balance_usdc(block: int) -> float:
+    """USDC cash the Pool actually holds for the reserve (what depositors can withdraw now)."""
+    calldata = function_selector("getVirtualUnderlyingBalance(address)") + encode_address(USDC)
+    words = split_words(eth_call(AAVE_V3_POOL, calldata, block))
+    return decode_uint(words[0]) / 10**USDC_DECIMALS
+
+
 def get_rate_params_bps(strategy: str, block: int) -> dict:
     """Rate parameters from a v3.2+ strategy: getInterestRateDataBps(USDC), already in bps."""
     calldata = function_selector("getInterestRateDataBps(address)") + encode_address(USDC)
